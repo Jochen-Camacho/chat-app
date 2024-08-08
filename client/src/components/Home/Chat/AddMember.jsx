@@ -8,10 +8,10 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
 
-const AddMember = () => {
+const AddMember = ({ friends, members, handleAddMember }) => {
   return (
     <Command>
       <CommandInput placeholder="Type a command or search..." />
@@ -19,9 +19,28 @@ const AddMember = () => {
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandSeparator />
         <CommandGroup heading="Settings">
-          <CommandItem>Profile</CommandItem>
-          <CommandItem>Billing</CommandItem>
-          <CommandItem>Settings</CommandItem>
+          {friends.map((f) => (
+            <button
+              variant={"ghost"}
+              className="w-full  cursor-pointer"
+              key={f.id}
+              disabled={members.find((m) => m.id === f.id)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddMember(f);
+              }}
+            >
+              <CommandItem
+                className={`w-full  cursor-pointer ${
+                  members.find((m) => m.id === f.id)
+                    ? "cursor-not-allowed"
+                    : "cursor-pointer"
+                }`}
+              >
+                {f.username}
+              </CommandItem>
+            </button>
+          ))}
         </CommandGroup>
       </CommandList>
     </Command>

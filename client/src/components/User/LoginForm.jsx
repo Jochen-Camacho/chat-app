@@ -1,11 +1,19 @@
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import loginService from "../../services/user";
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const onSubmit = async (data) => {
+    try {
+      const resp = await loginService.login(data);
+      loginService.setToken(resp.token);
+      console.log(resp);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

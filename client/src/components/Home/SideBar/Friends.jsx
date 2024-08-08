@@ -1,31 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBarListItem from "./SideBarListItem";
-import { Link } from "react-router-dom";
+import friendService from "../../../services/friends";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 
-const friends = [
-  {
-    id: 1,
-    name: "John Carter",
-  },
-  {
-    id: 2,
-    name: "John Carter",
-  },
-  {
-    id: 3,
-    name: "John Carter",
-  },
-  {
-    id: 3,
-    name: "John Carter",
-  },
-];
-
-const Friends = () => {
+const Friends = ({ friends }) => {
   const [addFriendVisible, setAddFriendVisible] = useState(false);
+
   return (
     <div className="flex flex-col gap-2">
       <Button
@@ -52,7 +34,7 @@ const Friends = () => {
       </div>
 
       {friends.map((f) => (
-        <SideBarListItem title={f.name} key={f.id} />
+        <SideBarListItem title={f.username} key={f.id} />
       ))}
     </div>
   );

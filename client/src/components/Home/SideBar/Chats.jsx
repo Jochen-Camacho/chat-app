@@ -1,27 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBarListItem from "./SideBarListItem";
 import { Link } from "react-router-dom";
-
-const chats = [
-  {
-    id: 1,
-    title: "Chat 1",
-  },
-  {
-    id: 2,
-    title: "Chat 2",
-  },
-  {
-    id: 3,
-    title: "Chat 3",
-  },
-  {
-    id: 4,
-    title: "Chat 4",
-  },
-];
+import chatsService from "../../../services/chats";
 
 const Chats = () => {
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    chatsService
+      .getUserChats()
+      .then((data) => {
+        setChats(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div className="flex flex-col gap-2">
       <Link to={"/chat"}>
@@ -30,7 +23,7 @@ const Chats = () => {
       {chats.map((c) => (
         <SideBarListItem
           key={c.id}
-          title={c.title}
+          title={c.name}
           time={"10:00"}
           lastMessage={"Sender: Last Message"}
         />

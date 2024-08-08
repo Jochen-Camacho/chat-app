@@ -11,8 +11,6 @@ router.get("/", userExtractor, async (req, res, next) => {
       },
     });
 
-    info(userChats[0].dataValues.chatId);
-
     const chatPromises = userChats.map(async (uc) => {
       return await Chat.findByPk(uc.dataValues.chatId, {
         include: {
